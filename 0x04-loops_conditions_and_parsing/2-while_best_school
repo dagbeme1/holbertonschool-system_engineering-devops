@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
-BestSchool=true
-BestSChool=1
-while [ $BestSchool ]
+# This script is displaying "Best School" 10 times
+i=0
+while (( i < 10 ));
 do
-echo $BestSChool
-if [ $BestSChool -eq 10 ];
-then
-break
-fi
-((count++))
+echo "Best School";
+(( i++ ));
 done
