@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 i=0
-while ((i < 11 )); do 
+while ((i < 10 )); do 
 	((i++));
-if [ $i -eq 10 ];
+if [ $i -eq 9 ];
 then 
 	echo "Hi"
 else
