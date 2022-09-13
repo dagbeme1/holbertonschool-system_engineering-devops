@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-valid=true
-count=1
-while [ $valid ]
+BestSchool=true
+BestSChool=1
+while [ $BestSchool ]
 do
-echo Best School
-if [ Best School -eq 10 ];
+echo $BestSChool
+if [ $BestSChool -eq 10 ];
 then
 break
 fi
