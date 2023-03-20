@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#Update and Install HAproxy server
+sudo apt-get -y update
+sudo apt-get -y upgrade
+apt install -y haproxy
+#Configure HAproxy to be managed via init script
+sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/haproxy
+mkdir -p /etc/haproxy
+touch /etc/haproxy/haproxy.cfg
+#Prepare Configuration file for HAproxy
+echo "
+    defaults
+    mode http
+    timeout client 10s
+    timeout server 10s
+    timeout connect 5s
+    timeout http-request 10s
+frontend web-frontend
+    bind *:80
+    default_backend web-backend
+backend web-backend
+    balance roundrobin
+    server web1 35.18025.2:80 check
+    server web2 13.36.233.38:80 check
+    " > /etc/haproxy/haproxy.cfg
+#Restart HAproxy
+sudo service haproxy restart
