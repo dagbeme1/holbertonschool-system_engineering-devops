@@ -1,36 +1,25 @@
 #!/usr/bin/env bash
-# Installs Nginx with the following configurations:
-#+    Listens on port 80.
-#+    Returns a page containing "Holberton School" when queried
-#+     at the root with a curl GET request.
-#+    Configures /redirect_me as a "301 Moved Permanently".
-#+    Includes a custom 404 page containing "Ceci n'est pas une page".
-#+    Contains a custom HTTP header named X-Served-By.
-#+    The value of the HTTP header is the hostname of the running server.
-
-apt-get update
-apt-get install -y nginx
-
-mkdir -p /var/www/html
-touch /var/www/html/index.html
-echo "Holberton School" > /var/www/html/index.html
-touch /var/www/html/404.html
-echo "Ceci n'est pas une page" > /var/www/html/404.html
-
-printf %s "server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
+#Update and Install nginx web server
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y install nginx
+#Create Hello World html file
+mkdir -p /etc/nginx/html
+touch /etc/nginx/html/index.html /etc/nginx/html/404.html
+echo "Hello World!" > /etc/nginx/html/index.html
+echo "Ceci n'est pas une page" > /etc/nginx/html/404.html
+#configure nginx to listen on port 80
+echo "server {
+    listen 80;
     add_header X-Served-By $HOSTNAME;
-    root   /var/www/html;
-    index  index.html index.htm;
-    location /redirect_me {
-        return 301 http://cuberule.com/;
+    location / {
+        root /etc/nginx/html;
+        index index.html;
+    }
+    location /redirect {
+        return 301 https://en.wikipedia.org/wiki/The_Spanish_Inquisition_(Monty_Python);
     }
     error_page 404 /404.html;
-    location /404 {
-      root /var/www/html;
-      internal;
-    }
 }" > /etc/nginx/sites-available/default
-
-service nginx restart
+#restart nginx
+sudo service nginx restart
